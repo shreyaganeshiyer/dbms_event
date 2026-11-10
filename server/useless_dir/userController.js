@@ -1,4 +1,4 @@
-const db = require('../config/db')
+const db = require('./db')
 
 getUser = (req,res)=>{
     const sql = 'select * from customers'

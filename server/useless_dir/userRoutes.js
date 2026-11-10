@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const getUser = require('../controller/userController');
+const getUser = require('./userController');
 //default home page
 
 router.get('/', (req, res) => {
