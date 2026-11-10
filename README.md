@@ -1,4 +1,4 @@
-#-------- these are the react vite init-----
+# -------- these are the react vite init-----
 npm create vite@latest . -- --template react
 npm install
 
