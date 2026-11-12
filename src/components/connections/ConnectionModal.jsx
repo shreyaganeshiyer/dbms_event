@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { X, Loader2, CheckCircle2, XCircle } from 'lucide-react';
-import { connectionsApi } from '../../services/connectionsApi';
+import * as connectionsApi from '../../services/connectionsApi';
 import { useConnection } from '../../context/ConnectionContext';
 
 const emptyForm = { name: '', host: 'localhost', port: '3306', database: '', username: '', password: '' };
@@ -16,26 +16,41 @@ const fields = [
 
 const inputClass = 'mt-1 w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 outline-none focus:border-blue-500';
 
-export default function ConnectionModal({ onClose }) {
-  const { connection, setConnection } = useConnection();
+export default function ConnectionModal({ open, onClose }) {
+  const { connection, setConnection, saveConnection } = useConnection();
   const [form, setForm] = useState(emptyForm);
-  const [busy, setBusy] = useState(null); // 'test' | 'connect' | 'disconnect' | null
+  const [busy, setBusy] = useState(null); // 'test' | 'connect' | 'save' | 'disconnect' | null
   const [status, setStatus] = useState(null); // { ok, message }
 
-  const update = (key) => (e) => setForm({ ...form, [key]: e.target.value });
+  // Don't render anything when closed.
+  if (!open) return null;
+
+  const update = (key) => (e) =>
+    setForm((f) => ({ ...f, [key]: e.target.value }));
 
   async function run(action, fn) {
     setBusy(action);
     setStatus(null);
     try {
       const data = await fn();
-      setStatus({ ok: true, message: data.message });
+      setStatus({ ok: true, message: data?.message || 'Done.' });
       return data;
     } catch (err) {
       setStatus({ ok: false, message: err.message });
       return null;
     } finally {
       setBusy(null);
+    }
+  }
+
+  async function handleSave() {
+    if (!form.name.trim()) {
+      setStatus({ ok: false, message: 'Give this connection a name before saving.' });
+      return;
+    }
+    const data = await run('save', () => saveConnection(form));
+    if (data) {
+      setStatus({ ok: true, message: 'Saved to your connections.' });
     }
   }
 
@@ -115,6 +130,14 @@ export default function ConnectionModal({ onClose }) {
             >
               {busy === 'test' && <Loader2 size={14} className="animate-spin" />}
               Test
+            </button>
+            <button
+              onClick={handleSave}
+              disabled={busy !== null}
+              className="flex items-center gap-2 rounded-md border border-slate-700 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 disabled:opacity-50"
+            >
+              {busy === 'save' && <Loader2 size={14} className="animate-spin" />}
+              Save
             </button>
             <button
               onClick={handleConnect}

@@ -1,12 +1,12 @@
-import { NavLink } from 'react-router-dom';
-import { Database, Bell, ChevronDown } from 'lucide-react';
-import ConnectionStatus from '../connections/ConnectionStatus';
+import { NavLink } from "react-router-dom";
+import { Database, Bell, ChevronDown } from "lucide-react";
+import ConnectionStatus from "../connections/ConnectionStatus";
 
 const tabs = [
-  { to: '/', label: 'Workspace' },
-  { to: '/history', label: 'History' },
-  { to: '/analytics', label: 'Analytics' },
-  { to: '/optimization-lab', label: 'Optimization Lab' },
+  { to: "/", label: "Workspace" },
+  { to: "/history", label: "History" },
+  { to: "/analytics", label: "Analytics" },
+  { to: "/optimization-lab", label: "Optimization Lab" },
 ];
 
 export default function Navbar() {
@@ -28,7 +28,9 @@ export default function Navbar() {
               end
               className={({ isActive }) =>
                 `rounded-md px-3 py-1.5 text-sm transition ${
-                  isActive ? 'bg-blue-600/15 text-blue-400' : 'text-slate-400 hover:text-slate-200'
+                  isActive
+                    ? "bg-blue-600/15 text-blue-400"
+                    : "text-slate-400 hover:text-slate-200"
                 }`
               }
             >

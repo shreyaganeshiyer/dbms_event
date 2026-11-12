@@ -41,7 +41,6 @@ export async function activate_pool(details) {
     await pool.end().catch(() => {});
     throw err;
   }
-
   // older active pools?
   if (activePool) await activePool.end().catch(() => {});
 
