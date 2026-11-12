@@ -1,16 +1,18 @@
-import { useState } from 'react';
-import { Play } from 'lucide-react';
+import { useState,useEffect } from "react";
+import { Play } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
-import SqlEditor from '../components/workspace/SqlEditor';
-import ResultsTable from '../components/workspace/ResultsTable';
+import SqlEditor from "../components/workspace/SqlEditor";
+import ResultsTable from "../components/workspace/ResultsTable";
 
-import { queriesApi } from '../services/queriesApi';
-import { useConnection } from '../context/ConnectionContext';
+import { queriesApi } from "../services/queriesApi";
+import { useConnection } from "../context/ConnectionContext";
 
-const starter = 'SELECT * FROM customers LIMIT 10;';
+const starter = "SELECT * FROM customers LIMIT 10;";
 
 export default function Workspace() {
   const { connection } = useConnection();
+  const location = useLocation();
 
   const [sql, setSql] = useState(starter);
   const [result, setResult] = useState(null);
@@ -19,7 +21,7 @@ export default function Workspace() {
 
   async function handleRun() {
     if (!connection) {
-      setError('No database connected.');
+      setError("No database connected.");
       return;
     }
     if (!sql.trim() || running) return;
@@ -37,10 +39,16 @@ export default function Workspace() {
     }
   }
 
+  useEffect(() => {
+    if (location.state?.sql) setSql(location.state.sql);
+  }, [location.state]);
+
   return (
     <div className="flex h-[calc(100vh-3.5rem)] flex-col">
       <div className="flex items-center justify-between border-b border-slate-800 px-4 py-2">
-        <span className="text-sm text-slate-400">Press Ctrl/Cmd + Enter to run</span>
+        <span className="text-sm text-slate-400">
+          Press Ctrl/Cmd + Enter to run
+        </span>
         <button
           onClick={handleRun}
           disabled={running}

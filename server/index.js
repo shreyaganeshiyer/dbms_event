@@ -4,8 +4,12 @@ import cors from 'cors';
 
 import queryRoutes from './routes/queries.js';
 import connectionRoutes from './routes/connections.js';
+
 import authRoutes from './routes/auth.js';
 import { ensureAuthSchema } from './userAuth/authSchema.js';
+
+import historyRoutes from './routes/history.js';
+import { ensureHistorySchema } from './utility/historyDb.js';
 
 
 // app's database
@@ -20,6 +24,7 @@ app.use(express.json({ limit: '100kb' }));
 app.use('/api/connections', connectionRoutes);
 app.use('/api/queries', queryRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/history', historyRoutes);
 
 
 app.listen(PORT, async () => {
@@ -27,6 +32,7 @@ app.listen(PORT, async () => {
   try {
     await ensureSchema();
     await ensureAuthSchema();
+    await ensureHistorySchema();
     console.log('App database ready.');
   } catch (err) {
     console.error(`Could not set up the app database: ${err.message}`);

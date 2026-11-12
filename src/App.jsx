@@ -1,7 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import AppLayout from "./components/layout/AppLayout";
+
 import ComingSoon from "./pages/ComingSoon";
+
 import Workspace from "./pages/workSpace";
+import History from './pages/History';
 
 import RequireAuth from "./components/auth/requireAuth";
 import Login from "./pages/login";
@@ -15,7 +18,7 @@ export default function App() {
 
       <Route path="/" element={<RequireAuth> <AppLayout /> </RequireAuth> }>
           <Route path="/" element={<Workspace />} />
-          <Route path="/history" element={<ComingSoon title="History" />} />
+          <Route path="/history" element={<History/>} />
           <Route path="/analytics" element={<ComingSoon title="Analytics" />} />
           <Route
             path="/optimization-lab"

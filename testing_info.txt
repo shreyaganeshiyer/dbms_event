@@ -1,0 +1,14 @@
+
+Key Optimization Experiments to Try
+
+Use this dataset to test four high-impact MySQL optimization techniques:
+• Composite Indexes (Leftmost Prefix Rule). 
+--Add CREATE INDEX idx_route ON flights(origin_code, destination_code, departure_time); 
+--and re-run EXPLAIN ANALYZE. Observe how the execution plan switches from a Table scan to an Index range scan.
+
+• Covering Indexes. 
+--Create an index that includes every column needed by a query (CREATE INDEX idx_booking_cover ON bookings(status, booked_at, flight_id, passenger_id, seat_number);). 
+--This lets MySQL answer the query directly from the index without touching the main table (Using index).
+
+• SARGable Queries (Avoiding Functions on Indexed Columns). Compare WHERE YEAR(booked_at) = 2026 (which disables index usage) against WHERE booked_at >= '2026-01-01' AND booked_at < '2027-01-01' (which uses the index).
+• Pagination Optimization. Compare LIMIT 10 OFFSET 80000 (slow, forces MySQL to count and discard 80,000 rows) against keyset pagination using WHERE booking_id > 80000 LIMIT 10 (instant index lookup).
