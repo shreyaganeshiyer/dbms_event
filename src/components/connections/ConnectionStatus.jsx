@@ -4,16 +4,12 @@ import { useConnection } from '../../context/ConnectionContext';
 import ConnectionModal from './ConnectionModal';
 
 export default function ConnectionStatus() {
-  const {
-    connection,
-    saved,
-    refreshSaved,
-    switchTo,
-    removeSaved,
-  } = useConnection();
+
+  const { connection,saved,refreshSaved,switchTo,removeSaved,} = useConnection();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  
   const [switchingId, setSwitchingId] = useState(null);
   const [error, setError] = useState(null);
   const wrapRef = useRef(null);

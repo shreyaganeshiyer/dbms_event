@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
-import { Database, Bell, ChevronDown } from "lucide-react";
+import { Database } from "lucide-react";
 import ConnectionStatus from "../connections/ConnectionStatus";
+import UserMenu from "../auth/UserMenu";
 
 const tabs = [
   { to: "/", label: "Workspace" },
@@ -40,19 +41,9 @@ export default function Navbar() {
         </nav>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         <ConnectionStatus />
-        <button className="relative text-slate-400 hover:text-slate-200">
-          <Bell size={18} />
-          <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-red-500" />
-        </button>
-
-        <button className="flex items-center gap-2 text-slate-300">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 text-sm font-medium text-white">
-            S
-          </span>
-          <ChevronDown size={14} />
-        </button>
+        <UserMenu />
       </div>
     </header>
   );

@@ -1,11 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import {createContext,useCallback,useContext,useEffect,useMemo,useState,} from 'react';
 
 import * as connectionsApi from '../services/connectionsApi';
 
@@ -31,7 +24,7 @@ export function ConnectionProvider({ children }) {
 
   useEffect(() => {
     let cancelled = false;
-
+    
     (async () => {
       try {
         const data = await connectionsApi.getActive();

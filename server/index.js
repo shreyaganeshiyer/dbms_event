@@ -4,6 +4,9 @@ import cors from 'cors';
 
 import queryRoutes from './routes/queries.js';
 import connectionRoutes from './routes/connections.js';
+import authRoutes from './routes/auth.js';
+import { ensureAuthSchema } from './userAuth/authSchema.js';
+
 
 // app's database
 import { ensureSchema } from './utility/appDb.js';
@@ -16,11 +19,14 @@ app.use(express.json({ limit: '100kb' }));
 
 app.use('/api/connections', connectionRoutes);
 app.use('/api/queries', queryRoutes);
+app.use('/api/auth', authRoutes);
+
 
 app.listen(PORT, async () => {
   console.log(`QueryLens API running on http://localhost:${PORT}`);
   try {
     await ensureSchema();
+    await ensureAuthSchema();
     console.log('App database ready.');
   } catch (err) {
     console.error(`Could not set up the app database: ${err.message}`);

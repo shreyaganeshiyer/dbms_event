@@ -1,16 +1,16 @@
 import { Router } from 'express';
+import { test, connect, active, deactivate } from '../controller/connections.js';
 import {
-  test,
-  connect,
-  active,
-  deactivate,
   listSavedConnections,
   saveConnection,
   deleteSaved,
   connectSaved,
-} from '../controller/connections.js';
+} from '../controller/savedConnections.js';
+import { requireAuth } from '../middleware/requireAuth.js';
 
 const router = Router();
+
+router.use(requireAuth);
 
 router.post('/test', test);
 router.post('/connect', connect);

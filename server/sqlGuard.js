@@ -24,15 +24,11 @@ export class SqlGuardError extends Error {
     }
 }
 
-// this is some regularExpression thing my brain is fried i can't
-// this removes all comments are strings things from the query and not consider it as sql cmd
-
 function stripLiteralsAndComments(sql) {
     const pattern = /'(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"|`[^`]*`|\/\*[\s\S]*?\*\/|--[^\n]*|#[^\n]*/g;
     return sql.replace(pattern, ' ');
 }
 
-// Returns the SQL to run (trimmed, no trailing semicolon) or throws SqlGuardError.
 export function validateReadOnly(input) {
     if (typeof input !== 'string' || !input.trim()) {
         throw new SqlGuardError('The editor is empty. Write a query first.');
