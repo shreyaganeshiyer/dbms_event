@@ -1,27 +1,9 @@
-# -------- these are the react vite init-----
+# Install dependencies 
 
-npm create vite@latest . -- --template react
 npm install
 
-# ----------these are the dependencies to install -----
+# run both react and node.js
 
-# Frontend
+npm run dev
 
-npm install react-router-dom lucide-react @monaco-editor/react recharts
-
-# Backend
-
-npm install express cors mysql2 dotenv
-
-# Styling (Tailwind v3)
-
-npm install -D tailwindcss@3 postcss autoprefixer
-npx tailwindcss init -p
-
-# Run both frontend and backend simultaneously
-
-for frontend : npm run dev
-
-for backend node server/index.js
-
-makesure there exists a valid database with correct name
+node server/index.js
